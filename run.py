@@ -93,13 +93,18 @@ while True:
                 is_alarm_on = True
                 # Display while iPhone is available
                 print('以下直营店预约可用：\n{}'.format(','.join(lst_available)))
-                if choice_type in ["iPhone 13 Mini", "iPhone 13"]:
-                    buy_url = "https://www.apple.com.cn/shop/buy-iphone/iphone-13/" + code_iphone
+                counter = 0
+                while counter < 5:
+                    if choice_type in ["iPhone 13 Mini", "iPhone 13"]:
+                        buy_url = "https://www.apple.com.cn/shop/buy-iphone/iphone-13/" + code_iphone
+                    else:
+                        buy_url = "https://www.apple.com.cn/shop/buy-iphone/iphone-13-pro/" + code_iphone
+                    url = input_bark + "{}有货，点击复制购买链接购买?automaticallyCopy=1&copy={}".format(''.join(lst_available), buy_url)
+                    response = requests.request("GET", url, data={})
+                    counter += 1
+                    time.sleep(1)
                 else:
-                    buy_url = "https://www.apple.com.cn/shop/buy-iphone/iphone-13-pro/" + code_iphone
-                url = input_bark + "{}有货, 点击跳转购买?url={}".format(''.join(lst_available), buy_url)
-                response = requests.request("GET", url, data={})
-                break
+                    break
 
         if not is_available:
             is_alarm_on = False
