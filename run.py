@@ -2,7 +2,6 @@ import time
 import datetime
 import requests
 import json
-from playsound import playsound
 
 
 def bbs(s):
@@ -10,10 +9,8 @@ def bbs(s):
         print('[{}] {}'.format(datetime.datetime.now().strftime('%H:%M:%S'), s))
 
 
-input('欢迎使用iPhone取货预约助手，请合理使用工具\n正在检查环境：\n即将播放预约提示音，按任意键开始...')
-sound_alarm = './alarm.mp3'
-playsound(sound_alarm)
-
+input('欢迎使用iPhone取货预约助手，请合理使用工具\n正在检查环境：\n按任意键开始...')
+input_bark = str(input('请输入bark提醒链接(https://api.day.app/xxx/)：'))
 print('配置特定型号')
 # Config State
 type_phone = json.load(open('category.json', encoding='utf-8'))
@@ -96,7 +93,8 @@ while True:
                 is_alarm_on = True
                 # Display while iPhone is available
                 print('以下直营店预约可用：\n{}\nhttps://www.apple.com.cn/shop/buy-iphone'.format(','.join(lst_available)))
-            playsound(sound_alarm)
+            url = input_bark + "{}有货".format(''.join(lst_available))
+            response = requests.request("GET", url, data={})
 
         if not is_available:
             is_alarm_on = False
