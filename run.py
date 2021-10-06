@@ -103,8 +103,6 @@ while True:
                     response = requests.request("GET", url, data={})
                     counter += 1
                     time.sleep(1)
-                else:
-                    break
 
         if not is_available:
             is_alarm_on = False
